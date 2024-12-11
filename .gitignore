@@ -1,24 +1,56 @@
-# Compiled class file
+# Compiled class files
 *.class
 
-# Log file
+# Maven specific files
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle specific files
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# Logs
 *.log
 
-# BlueJ files
-*.ctxt
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+*.iws
+out/
 
-# Package Files #
+# Eclipse specific files
+.project
+.classpath
+.settings/
+bin/
+
+# VS Code specific files
+.vscode/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Tool specific
 *.jar
 *.war
-*.nar
 *.ear
-*.zip
-*.tar.gz
-*.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# Spring Boot application properties
+*.properties
+*.yml
+
+# Test reports
+test-output/
+surefire-reports/
