@@ -2,10 +2,12 @@ package com.maskedsyntax.blog.service.impl;
 
 import com.maskedsyntax.blog.entity.Post;
 import com.maskedsyntax.blog.exception.ResourceNotFoundException;
+import com.maskedsyntax.blog.payload.PageResponse;
 import com.maskedsyntax.blog.payload.PostDTO;
 import com.maskedsyntax.blog.repository.PostRepository;
 import com.maskedsyntax.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -55,10 +57,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts(int pageNo, int pageSize) {
+    public PageResponse getAllPosts(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        List<Post> posts = postRepository.findAll(pageable).getContent();
-        return posts.stream().map(PostServiceImpl::getPostDTO).collect(Collectors.toList());
+        Page<Post> postPage = postRepository.findAll(pageable);
+        List<Post> posts = postPage.getContent();
+        List<PostDTO> content = posts.stream().map(PostServiceImpl::getPostDTO).collect(Collectors.toList());
+
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setContent(content);
+        pageResponse.setPageNo(pageNo);
+        pageResponse.setPageSize(pageSize);
+        pageResponse.setTotalElements(postPage.getSize());
+        pageResponse.setTotalPages(postPage.getTotalPages());
+        pageResponse.setLastPage(postPage.isLast());
+
+        return pageResponse;
     }
 
     @Override

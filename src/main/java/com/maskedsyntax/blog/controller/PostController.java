@@ -1,13 +1,12 @@
 package com.maskedsyntax.blog.controller;
 
+import com.maskedsyntax.blog.payload.PageResponse;
 import com.maskedsyntax.blog.payload.PostDTO;
 import com.maskedsyntax.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
@@ -25,7 +24,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostDTO>> getAllPosts(@RequestParam(required = false, defaultValue = "0") int pageNo, @RequestParam(required = false, defaultValue = "5") int pageSize) {
+    public ResponseEntity<PageResponse> getAllPosts(@RequestParam(required = false, defaultValue = "0") int pageNo, @RequestParam(required = false, defaultValue = "5") int pageSize) {
         return ResponseEntity.ok(postService.getAllPosts(pageNo, pageSize));
     }
 

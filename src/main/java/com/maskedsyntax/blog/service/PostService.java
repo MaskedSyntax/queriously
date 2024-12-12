@@ -1,15 +1,14 @@
 package com.maskedsyntax.blog.service;
 
+import com.maskedsyntax.blog.payload.PageResponse;
 import com.maskedsyntax.blog.payload.PostDTO;
-
-import java.util.List;
 
 public interface PostService {
     // Create new Post
     PostDTO createPost(PostDTO postDTO);
 
     // Get All Posts
-    List<PostDTO> getAllPosts(int pageNo, int pageSize);
+    PageResponse getAllPosts(int pageNo, int pageSize);
 
     // Get Post by Id
     PostDTO getPostById(Long id);
