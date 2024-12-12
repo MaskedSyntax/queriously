@@ -6,6 +6,8 @@ import com.maskedsyntax.blog.payload.PostDTO;
 import com.maskedsyntax.blog.repository.PostRepository;
 import com.maskedsyntax.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -53,8 +55,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    public List<PostDTO> getAllPosts(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        List<Post> posts = postRepository.findAll(pageable).getContent();
         return posts.stream().map(PostServiceImpl::getPostDTO).collect(Collectors.toList());
     }
 
