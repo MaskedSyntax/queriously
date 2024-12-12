@@ -1,11 +1,13 @@
 package com.maskedsyntax.blog.service.impl;
 
 import com.maskedsyntax.blog.entity.Post;
+import com.maskedsyntax.blog.exception.ResourceNotFoundException;
 import com.maskedsyntax.blog.payload.PostDTO;
 import com.maskedsyntax.blog.repository.PostRepository;
 import com.maskedsyntax.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,19 +20,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     public PostServiceImpl(PostRepository postRepository) {
         this.postRepository = postRepository;
-    }
-
-    @Override
-    public PostDTO createPost(PostDTO postDTO) {
-        Post post = getPost(postDTO);
-
-        return getPostDTO(postRepository.save(post));
-    }
-
-    @Override
-    public List<PostDTO> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
-        return posts.stream().map(PostServiceImpl::getPostDTO).collect(Collectors.toList());
     }
 
     private static PostDTO getPostDTO(Post resposePost) {
@@ -54,5 +43,36 @@ public class PostServiceImpl implements PostService {
         post.setCreatedAt(new Date());
         post.setUpdatedAt(new Date());
         return post;
+    }
+
+    @Override
+    public PostDTO createPost(PostDTO postDTO) {
+        Post post = getPost(postDTO);
+
+        return getPostDTO(postRepository.save(post));
+    }
+
+    @Override
+    public List<PostDTO> getAllPosts() {
+        List<Post> posts = postRepository.findAll();
+        return posts.stream().map(PostServiceImpl::getPostDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public PostDTO getPostById(Long id) {
+        return postRepository.findById(id).map(PostServiceImpl::getPostDTO).orElseThrow(() -> new ResourceNotFoundException("post", "id", id.toString()));
+    }
+
+    @Override
+    public PostDTO updatePost(Long id, PostDTO postDTO) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("post", "id", id.toString()));
+
+        post.setTitle(postDTO.getTitle());
+        post.setDescription(postDTO.getDescription());
+        post.setContent(postDTO.getContent());
+        post.setAuthor(postDTO.getAuthor());
+        post.setUpdatedAt(new Date());
+
+        return getPostDTO(postRepository.save(post));
     }
 }

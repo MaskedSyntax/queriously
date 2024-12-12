@@ -1,6 +1,5 @@
 package com.maskedsyntax.blog.controller;
 
-import com.maskedsyntax.blog.entity.Post;
 import com.maskedsyntax.blog.payload.PostDTO;
 import com.maskedsyntax.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +27,15 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<PostDTO>> getAllPosts() {
         return ResponseEntity.ok(postService.getAllPosts());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDTO> getPostById(@PathVariable("id") Long postId) {
+        return ResponseEntity.ok(postService.getPostById(postId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDTO> updatePost(@PathVariable("id") Long postId, @RequestBody PostDTO postDTO) {
+        return ResponseEntity.ok(postService.updatePost(postId, postDTO));
     }
 }
