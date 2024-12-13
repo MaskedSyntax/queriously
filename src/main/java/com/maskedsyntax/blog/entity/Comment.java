@@ -7,12 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import static com.maskedsyntax.blog.utils.AppConstants.COLUMN_POST_ID;
+import static com.maskedsyntax.blog.utils.AppConstants.COMMENTS_TABLE;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
-@Table(name = "comments")
+@Table(name = COMMENTS_TABLE)
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +32,6 @@ public class Comment {
     private Date modified;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = COLUMN_POST_ID, nullable = false)
     private Post post;
 }

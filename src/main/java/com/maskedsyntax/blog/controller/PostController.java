@@ -3,11 +3,12 @@ package com.maskedsyntax.blog.controller;
 import com.maskedsyntax.blog.payload.PageResponse;
 import com.maskedsyntax.blog.payload.PostDTO;
 import com.maskedsyntax.blog.service.PostService;
-import com.maskedsyntax.blog.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.maskedsyntax.blog.utils.AppConstants.*;
 
 @RestController
 @RequestMapping("/posts")
@@ -27,10 +28,10 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<PageResponse> getAllPosts(
-            @RequestParam(required = false, defaultValue = AppConstants.PAGE_NUMBER) int pageNo,
-            @RequestParam(required = false, defaultValue = AppConstants.PAGE_SIZE) int pageSize,
-            @RequestParam(required = false, defaultValue = AppConstants.SORT_BY) String sortBy,
-            @RequestParam(required = false, defaultValue = AppConstants.SORT_ORDER) String sortOrder
+            @RequestParam(required = false, defaultValue = DEFAULT_PAGE_NUMBER) int pageNo,
+            @RequestParam(required = false, defaultValue = DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(required = false, defaultValue = DEFAULT_SORT_BY_FIELD) String sortBy,
+            @RequestParam(required = false, defaultValue = DEFAULT_SORT_ORDER) String sortOrder
     ) {
         return ResponseEntity.ok(
                 postService.getAllPosts(pageNo, pageSize, sortBy, sortOrder));

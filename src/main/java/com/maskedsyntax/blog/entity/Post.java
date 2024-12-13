@@ -9,13 +9,16 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.maskedsyntax.blog.utils.AppConstants.COLUMN_TITLE;
+import static com.maskedsyntax.blog.utils.AppConstants.POST_TABLE;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
 @Table(
-        name = "posts", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
+        name = POST_TABLE, uniqueConstraints = {@UniqueConstraint(columnNames = {COLUMN_TITLE})}
 )
 public class Post {
 
