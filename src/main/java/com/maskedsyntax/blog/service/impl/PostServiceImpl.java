@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -57,11 +58,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageResponse getAllPosts(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+    public PageResponse getAllPosts(
+            int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = Sort.by(sortField, sortDirection);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<Post> postPage = postRepository.findAll(pageable);
         List<Post> posts = postPage.getContent();
-        List<PostDTO> content = posts.stream().map(PostServiceImpl::getPostDTO).collect(Collectors.toList());
+        List<PostDTO> content = posts.stream().map(PostServiceImpl::getPostDTO)
+                                     .collect(Collectors.toList());
 
         PageResponse pageResponse = new PageResponse();
         pageResponse.setContent(content);
@@ -76,12 +80,22 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDTO getPostById(Long id) {
-        return postRepository.findById(id).map(PostServiceImpl::getPostDTO).orElseThrow(() -> new ResourceNotFoundException("post", "id", id.toString()));
+        return postRepository.findById(id).map(PostServiceImpl::getPostDTO)
+                             .orElseThrow(
+                                     () -> new ResourceNotFoundException(
+                                             "post",
+                                             "id",
+                                             id.toString()
+                                     ));
     }
 
     @Override
     public PostDTO updatePost(Long id, PostDTO postDTO) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("post", "id", id.toString()));
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        "post", "id",
+                        id.toString()
+                ));
 
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());

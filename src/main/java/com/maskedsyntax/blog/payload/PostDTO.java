@@ -1,6 +1,6 @@
 package com.maskedsyntax.blog.payload;
 
-import lombok.*;
+import lombok.Data;
 
 import java.util.Date;
 
