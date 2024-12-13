@@ -1,6 +1,5 @@
 package com.maskedsyntax.blog.payload;
 
-import com.maskedsyntax.blog.entity.Post;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,5 +12,4 @@ public class CommentDTO {
     private String body;
     private Date created;
     private Date modified;
-    private Post post;
 }
