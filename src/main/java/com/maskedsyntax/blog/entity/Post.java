@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import static com.maskedsyntax.blog.utils.AppConstants.COLUMN_TITLE;
 import static com.maskedsyntax.blog.utils.AppConstants.POST_TABLE;
 
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 

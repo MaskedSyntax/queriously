@@ -2,12 +2,14 @@ package com.maskedsyntax.blog.service.impl;
 
 import com.maskedsyntax.blog.entity.Comment;
 import com.maskedsyntax.blog.entity.Post;
+import com.maskedsyntax.blog.exception.BlogAPIException;
 import com.maskedsyntax.blog.exception.ResourceNotFoundException;
 import com.maskedsyntax.blog.payload.CommentDTO;
 import com.maskedsyntax.blog.repository.CommentRepository;
 import com.maskedsyntax.blog.repository.PostRepository;
 import com.maskedsyntax.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -71,31 +73,58 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDTO updateComment(Long postId, CommentDTO comment) {
+    public CommentDTO updateComment(
+            Long postId, Long commentId, CommentDTO commentDTO) {
         Post post = findPostById(postId);
 
+        Comment comment = commentRepository.findById(commentId)
+                                           .orElseThrow(
+                                                   () -> new ResourceNotFoundException(
+                                                           "Comment",
+                                                           "commentId",
+                                                           commentId.toString()
+                                                   ));
+        if (!comment.getPost().equals(post)) {
+            throw new BlogAPIException(
+                    HttpStatus.BAD_REQUEST, "Comment cannot be updated");
+        }
 
-        return null;
+        comment.setBody(commentDTO.getBody());
+        return getCommentDTO(commentRepository.save(comment));
     }
 
     @Override
     public void deleteComment(Long postId, Long commentId) {
+        Post post = findPostById(postId);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        "Comment", "commentId",
+                        commentId.toString()
+                ));
+        if (!comment.getPost().equals(post)) {
+            throw new BlogAPIException(
+                    HttpStatus.BAD_REQUEST, "Comment cannot be deleted");
+        }
 
+        commentRepository.delete(comment);
     }
 
     @Override
     public List<CommentDTO> getCommentsByPostId(Long postId) {
-        List<Comment> posts = commentRepository.findByPostId(postId);
-        return posts.stream().map(CommentServiceImpl::getCommentDTO).collect(
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        return comments.stream().map(CommentServiceImpl::getCommentDTO).collect(
                 Collectors.toList());
     }
 
     @Override
-    public List<CommentDTO> getCommentsByPostIdAndUserId(
+    public List<CommentDTO> getCommentsByPostIdAndEmail(
             Long postId,
-            Long userId
+            String email
     ) {
-        return List.of();
+        List<Comment> comments = commentRepository.findByPostIdAndEmail(
+                postId, email);
+        return comments.stream().map(CommentServiceImpl::getCommentDTO).collect(
+                Collectors.toList());
     }
 
     @Override
@@ -103,6 +132,9 @@ public class CommentServiceImpl implements CommentService {
             Long commentId,
             Long postId
     ) {
-        return List.of();
+        List<Comment> comments = commentRepository.findByPostIdAndId(
+                postId, commentId);
+        return comments.stream().map(CommentServiceImpl::getCommentDTO).collect(
+                Collectors.toList());
     }
 }

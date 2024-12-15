@@ -10,7 +10,8 @@ public interface CommentService {
     CommentDTO createComment(Long postId, CommentDTO commentDTO);
 
     // Update a comment
-    CommentDTO updateComment(Long postId, CommentDTO commentDTO);
+    CommentDTO updateComment(
+            Long postId, Long commendId, CommentDTO commentDTO);
 
     // Delete a comment
     void deleteComment(Long postId, Long commentId);
@@ -19,7 +20,7 @@ public interface CommentService {
     List<CommentDTO> getCommentsByPostId(Long postId);
 
     // get comments from a specific post from a specific post
-    List<CommentDTO> getCommentsByPostIdAndUserId(Long postId, Long userId);
+    List<CommentDTO> getCommentsByPostIdAndEmail(Long postId, String email);
 
     // get a specific comment from a specific post
     List<CommentDTO> getCommentsByCommentIdAndPostId(
