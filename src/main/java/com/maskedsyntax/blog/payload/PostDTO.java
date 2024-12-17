@@ -20,6 +20,7 @@ public class PostDTO {
     private String description;
 
     @NotEmpty
+    @Size(min = 10, message = "Content must be at least 10 characters.")
     private String content;
 
     @NotEmpty
