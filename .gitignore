@@ -48,7 +48,6 @@ Thumbs.db
 *.ear
 
 # Spring Boot application properties
-*.properties
 *.yml
 
 # Test reports
