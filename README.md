@@ -71,6 +71,12 @@ Just starting out and will be updating details as I keep working on the project.
 
 ---
 
+## Important Note
+
+The resources/application.properties file is added for reference purposes, and for security reasons, the database username and password are kept empty. To use the project, please add your own database username and password in this file. Alternatively, create your own application.properties file.
+
+--- 
+
 ## Let’s Chat!
 
 Have suggestions or spot something that could be better? Feel free to open an issue or drop a pull request.
