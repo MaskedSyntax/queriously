@@ -1,84 +1,94 @@
-# BlogApp-Backend
+# Queriously
 
-**A Spring Boot backend for a feature-rich blog app!**
+**A Spring Boot-based Q&A platform for curious minds**
 
-This repo is my way of diving back into Spring Boot after a couple of years. It’s designed to serve as a reference for backend best practices and includes clean, documented code. Whether you're building your own blog app or just looking for some Spring Boot inspiration, this repo might be a great starting point!
+Queriously is a minimalist Q&A application where users can ask questions, vote on content, and engage in meaningful discussions. Whether you're looking to satisfy your curiosity or share your expertise, Queriously offers a simple yet robust environment for knowledge exchange.
 
 ---
 
 ## Features
 
-1. **Post APIs**  
-   - Create, update, delete, and fetch blog posts.  
-   - Add support for filtering and pagination.
+Queriously lets you post questions with a title and details. Upvote, downvote, and comment to drive engaging debates 💬, with secure JWT authentication for sign-up and login 🚀.
 
-2. **Comment APIs**  
-   - Add, edit, or delete comments on posts.  
-   - Fetch comments for specific blog posts.
-
-3. **Category APIs**  
-   - Manage categories (create, update, delete).  
-   - Retrieve posts based on categories.
-
-4. **User APIs**
-   - Register and log in users with JWT-based authentication.  
-   - Role-based features for users and admins.
-
-5. **Documentation**  
-   - Built with **SpringDoc OpenAPI**, making it super easy to explore and test the APIs.
+### API Documentation
+<code>➜</code> **Self-Documenting APIs:**  
+  Leverage SpringDoc OpenAPI for easy exploration and testing of all endpoints.
 
 ---
 
 ## Tech Stack
 
-- **Backend**: Spring Boot (Java)
-- **Database**: MySQL
-- **Security**: JWT-based authentication 
-- **API Documentation**: SpringDoc OpenAPI
-- **Build Tool**: Maven
+<code>➜ **Backend:** Spring Boot (Java) </code>  
+<code>➜ **Database:** MySQL </code>     
+<code>➜ **Security:** JWT-based authentication </code>    
+<code>➜ **API Documentation:** SpringDoc OpenAPI </code>    
+<code>➜ **Frontend:** Next.js & shadcn/ui with Bun</code>    
+<code>➜ **Build Tool:** Maven </code>  
 
 ---
 
-## Why I Built This
+## Why Queriously?
 
-- To get back into Spring Boot after a two-year break.  
-- Create a solid backend that could be used as a reference for future projects.  
-- Experiment with clean architecture and best practices while having fun coding!
+Queriously was born out of a desire to dive back into Spring Boot and level up my Next.js knowledge. This project is a fun experiment where I mix backend and frontend magic into one neat package. It’s a playground for trying out cool coding tricks, handling errors smartly, and building APIs that just work without all the fuss.
 
 ---
 
-## What’s Inside
+## Getting Started
 
-1. **Post Management**: APIs to handle CRUD operations for blog posts.  
-2. **Comment Management**: APIs to manage comments on posts.  
-3. **Category Management**: APIs to organize posts by categories.  
-4. **User Authentication**: Logic for sign-up and login (coming soon).  
+### Prerequisites
+- Java 17
+- Maven
+- MySQL
+- Bun
 
 ---
 
-## What Makes This Special
+### Running the Backend
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/maskedsynatax/queriously.git
+   ```
+2. **Configure the database:**  
+   Update your database connection details in:
+   ```
+   src/main/resources/application.properties
+   ```
+3. **Build and Run:**  
+   ```bash
+   mvn spring-boot:run
+   ```
+4. **Explore the API:**  
+   Access the API documentation at <code> http://localhost:8080/swagger-ui.html </code>
 
-- **Clean Architecture**: Clear separation of concerns (Controller → Service → Repository).  
-- **Error Handling**: Comprehensive and user-friendly error messages.  
-- **OpenAPI Integration**: Self-documented APIs for easier testing and understanding.  
-- **DTO Usage**: Keeps data handling consistent and clean.
+### Running the Frontend
+1. **Navigate to the Frontend Directory:**  
+    ```
+    cd frontend
+    ```
+2. **Install Dependencies with Bun:** 
+   ```bash
+   bun install
+   ```
+3. **Start the Dev Server:**
+   ```bash
+   bun dev
+   ```
+4. **Open the App:**  
+   Head over to <code> http://localhost:3000 </code> in your browser
+
 
 ---
 
 ## Current Status
 
-Just starting out and will be updating details as I keep working on the project. Contributions, feedback, or ideas are always welcome.
+Just starting out and will be updating details as I keep working on the project. Feedback or ideas are always welcome.
 
 ---
 
-## Important Note
+## License
+This project is licensed under the MIT License.
 
-The resources/application.properties file is added for reference purposes, and for security reasons, the database username and password are kept empty. To use the project, please add your own database username and password in this file. Alternatively, create your own application.properties file.
+---
 
---- 
-
-## Let’s Chat!
-
-Have suggestions or spot something that could be better? Feel free to open an issue or drop a pull request.
-
-
+## Let's Connect!
+Have suggestions or spot something that could be better? Open an issue or reach out directly.
