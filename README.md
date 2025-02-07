@@ -46,7 +46,7 @@ Queriously was born out of a desire to dive back into Spring Boot and level up m
 ### Running the Backend
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/maskedsynatax/queriously.git
+   git clone https://github.com/maskedsyntax/queriously.git
    ```
 2. **Configure the database:**  
    Update your database connection details in:

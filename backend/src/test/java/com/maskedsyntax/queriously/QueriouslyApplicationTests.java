@@ -1,10 +1,10 @@
-package com.maskedsyntax.blog;
+package com.maskedsyntax.queriously;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BlogAppBackendApplicationTests {
+class QueriouslyApplicationTests {
 
 	@Test
 	void contextLoads() {
