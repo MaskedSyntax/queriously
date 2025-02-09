@@ -47,4 +47,27 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questions = questionRepository.findAll();
         return questions.stream().map(question -> modelMapper.map(question, QuestionResponseDTO.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteQuestion(Long id) {
+        // check if question for given id exists
+        if (!questionRepository.existsById(id)) {
+            throw new EntityNotFoundException("Question not found with id: " + id);
+        }
+        questionRepository.deleteById(id);
+    }
+
+    @Override
+    public QuestionResponseDTO updateQuestion(Long id, QuestionRequestDTO questionRequestDTO) {
+        // check if question for given id exists
+        Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        question.setUserId(questionRequestDTO.getUserId());
+        question.setContent(questionRequestDTO.getContent());
+        question.setImageUrl(questionRequestDTO.getImageUrl());
+        question.setPublished(questionRequestDTO.getPublished());
+
+        Question updatedQuestion = questionRepository.save(question);
+        return modelMapper.map(updatedQuestion, QuestionResponseDTO.class);
+    }
 }

@@ -2,7 +2,6 @@ package com.maskedsyntax.queriously.controller;
 
 import com.maskedsyntax.queriously.dto.QuestionRequestDTO;
 import com.maskedsyntax.queriously.dto.QuestionResponseDTO;
-import com.maskedsyntax.queriously.entity.Question;
 import com.maskedsyntax.queriously.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,6 @@ public class QuestionController {
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<QuestionResponseDTO> addQuestion(@RequestBody QuestionRequestDTO questionRequestDTO) {
-//        System.out.println(questionRequestDTO);
         QuestionResponseDTO questionResponseDTO = questionService.saveQuestion(questionRequestDTO);
         return ResponseEntity.ok(questionResponseDTO);
     }
@@ -41,9 +39,15 @@ public class QuestionController {
         return ResponseEntity.ok(questions);
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<Question> test(@RequestBody Question question) {
-        System.out.println(question);
-        return ResponseEntity.ok(question);
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<QuestionResponseDTO> updateQuestion(@PathVariable Long id, @RequestBody QuestionRequestDTO questionRequestDTO) {
+        QuestionResponseDTO questionResponseDTO = questionService.updateQuestion(id, questionRequestDTO);
+        return ResponseEntity.ok(questionResponseDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAllQuestions(@PathVariable Long id) {
+        questionService.deleteQuestion(id);
+        return ResponseEntity.noContent().build();
     }
 }
