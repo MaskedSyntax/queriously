@@ -8,6 +8,7 @@ import com.maskedsyntax.queriously.service.QuestionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,14 +21,18 @@ public class QuestionServiceImpl implements QuestionService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository, ModelMapper modelMapper) {
+    public QuestionServiceImpl(
+            QuestionRepository questionRepository, ModelMapper modelMapper) {
         this.questionRepository = questionRepository;
         this.modelMapper = modelMapper;
     }
 
 
     @Override
-    public QuestionResponseDTO saveQuestion(QuestionRequestDTO questionRequestDTO) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public QuestionResponseDTO saveQuestion(
+            QuestionRequestDTO questionRequestDTO
+    ) {
         // QuestionRequestDTO -> Question
         Question question = modelMapper.map(questionRequestDTO, Question.class);
         // Save Question
@@ -37,30 +42,40 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public QuestionResponseDTO getQuestionById(Long id) {
-        Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Question question = questionRepository.findById(id)
+                                              .orElseThrow(EntityNotFoundException::new);
         return modelMapper.map(question, QuestionResponseDTO.class);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<QuestionResponseDTO> getQuestions() {
         List<Question> questions = questionRepository.findAll();
-        return questions.stream().map(question -> modelMapper.map(question, QuestionResponseDTO.class)).collect(Collectors.toList());
+        return questions.stream()
+                        .map(question -> modelMapper.map(question, QuestionResponseDTO.class))
+                        .collect(Collectors.toList());
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteQuestion(Long id) {
         // check if question for given id exists
         if (!questionRepository.existsById(id)) {
-            throw new EntityNotFoundException("Question not found with id: " + id);
+            throw new EntityNotFoundException(
+                    "Question not found with id: " + id);
         }
         questionRepository.deleteById(id);
     }
 
     @Override
-    public QuestionResponseDTO updateQuestion(Long id, QuestionRequestDTO questionRequestDTO) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public QuestionResponseDTO updateQuestion(
+            Long id, QuestionRequestDTO questionRequestDTO) {
         // check if question for given id exists
-        Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Question question = questionRepository.findById(id)
+                                              .orElseThrow(EntityNotFoundException::new);
 
         question.setUserId(questionRequestDTO.getUserId());
         question.setContent(questionRequestDTO.getContent());
