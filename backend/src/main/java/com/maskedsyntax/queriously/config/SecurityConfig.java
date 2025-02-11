@@ -37,14 +37,16 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeRequests -> {
 
-                authorizeRequests.requestMatchers(HttpMethod.POST, "/api/**")
-                                 .hasRole("ADMIN");
-                authorizeRequests.requestMatchers(HttpMethod.PUT, "/api/**")
-                                 .hasRole("ADMIN");
-                authorizeRequests.requestMatchers(HttpMethod.DELETE, "/api/**")
-                                 .hasRole("ADMIN");
-                authorizeRequests.requestMatchers(HttpMethod.GET, "/api/**")
-                                 .hasAnyRole("ADMIN", "USER");
+                // authorizeRequests.requestMatchers(HttpMethod.POST, "/api/**")
+                //                  .hasRole("ADMIN");
+                // authorizeRequests.requestMatchers(HttpMethod.PUT, "/api/**")
+                //                  .hasRole("ADMIN");
+                // authorizeRequests.requestMatchers(HttpMethod.DELETE, "/api/**")
+                //                  .hasRole("ADMIN");
+                // authorizeRequests.requestMatchers(HttpMethod.GET, "/api/**")
+                //                  .hasAnyRole("ADMIN", "USER");
+                authorizeRequests.requestMatchers("/api/auth/**")
+                                 .permitAll();
                 authorizeRequests
                         .anyRequest().authenticated();
             })
