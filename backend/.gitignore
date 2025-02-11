@@ -88,4 +88,4 @@ Thumbs.db
 test-output/
 surefire-reports/
 
-*/utils/PasswordEncoderImpl.java
+/src/main/java/com/maskedsyntax/queriously/utils/PasswordEncoderImpl.java
