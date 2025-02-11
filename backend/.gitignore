@@ -87,3 +87,5 @@ Thumbs.db
 # Test reports
 test-output/
 surefire-reports/
+
+*/utils/PasswordEncoderImpl.java
