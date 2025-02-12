@@ -83,6 +83,7 @@ Thumbs.db
 
 # Spring Boot application properties
 *.yml
+*.properties
 
 # Test reports
 test-output/
