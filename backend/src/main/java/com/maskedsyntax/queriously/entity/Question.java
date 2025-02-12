@@ -1,6 +1,5 @@
 package com.maskedsyntax.queriously.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @AllArgsConstructor
@@ -25,8 +27,8 @@ public class Question {
     private String imageUrl;
     private Date scheduledAt;
     private Boolean published;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    @CreationTimestamp
     private Date createdAt;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    @UpdateTimestamp
     private Date updatedAt;
 }

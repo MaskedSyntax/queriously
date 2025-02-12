@@ -9,6 +9,9 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 
 @Getter
 @Setter
@@ -27,7 +30,9 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password_hash;
+    @CreationTimestamp
     private Date created_at;
+    @UpdateTimestamp
     private Date updated_at;
 
     @ManyToMany(
