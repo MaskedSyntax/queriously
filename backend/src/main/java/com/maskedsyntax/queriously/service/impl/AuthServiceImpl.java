@@ -5,9 +5,14 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.maskedsyntax.queriously.dto.LoginDTO;
 import com.maskedsyntax.queriously.dto.RegisterDTO;
 import com.maskedsyntax.queriously.entity.Role;
 import com.maskedsyntax.queriously.entity.User;
@@ -22,12 +27,19 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(
+        UserRepository userRepository, 
+        RoleRepository roleRepository, 
+        PasswordEncoder passwordEncoder,
+        AuthenticationManager authenticationManager
+    ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -57,6 +69,19 @@ public class AuthServiceImpl implements AuthService {
 
         return "User Generated Successfully!";
 
+    }
+
+    @Override
+    public String login(LoginDTO loginDTO) {
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                loginDTO.getUsernameOrEmail(), loginDTO.getPassword()
+            )
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "User logged-in Succefully!";
     }
     
 }

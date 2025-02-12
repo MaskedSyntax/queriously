@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.maskedsyntax.queriously.dto.LoginDTO;
 import com.maskedsyntax.queriously.dto.RegisterDTO;
 import com.maskedsyntax.queriously.service.AuthService;
 
@@ -25,5 +26,11 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO) {
         String response = authService.register(registerDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+        String response = authService.login(loginDTO);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
