@@ -31,11 +31,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     public AuthServiceImpl(
-        UserRepository userRepository, 
-        RoleRepository roleRepository, 
-        PasswordEncoder passwordEncoder,
-        AuthenticationManager authenticationManager
-    ) {
+            UserRepository userRepository,
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -44,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String register(RegisterDTO registerDTO) {
-        
+
         // check if username is already in the database
         if (userRepository.existsByUsername(registerDTO.getUsername())) {
             throw new QueriouslyAPIException(HttpStatus.BAD_REQUEST, "Username already Exists");
@@ -65,6 +64,8 @@ public class AuthServiceImpl implements AuthService {
         Role userRole = roleRepository.findByRoleName("ROLE_USER");
         roles.add(userRole);
 
+        user.setRoles(roles);
+
         userRepository.save(user);
 
         return "User Generated Successfully!";
@@ -74,14 +75,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                loginDTO.getUsernameOrEmail(), loginDTO.getPassword()
-            )
-        );
+                new UsernamePasswordAuthenticationToken(
+                        loginDTO.getUsernameOrEmail(), loginDTO.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "User logged-in Succefully!";
     }
-    
+
 }
