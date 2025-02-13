@@ -1,6 +1,7 @@
 package com.maskedsyntax.queriously.service.impl;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.maskedsyntax.queriously.dto.JwtAuthResponseDTO;
 import com.maskedsyntax.queriously.dto.LoginDTO;
 import com.maskedsyntax.queriously.dto.RegisterDTO;
 import com.maskedsyntax.queriously.entity.Role;
@@ -65,14 +67,32 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginDTO loginDTO) {
+    public JwtAuthResponseDTO login(LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDTO.getUsernameOrEmail(), loginDTO.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return jwtTokenProvider.generateToken(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        Optional<User> userOpt = userRepository.findByUsernameOrEmail(loginDTO.getUsernameOrEmail(), loginDTO.getUsernameOrEmail());
+
+        String role = null;
+        if (userOpt.isPresent()) {
+            User loggedInUser = userOpt.get();
+            Optional<Role> roleOpt = loggedInUser.getRoles().stream().findFirst();
+
+            if (roleOpt.isPresent()) {
+                role = roleOpt.get().getRoleName();
+            }
+        }
+
+        JwtAuthResponseDTO jwtAuthResponse = new JwtAuthResponseDTO();
+        jwtAuthResponse.setAccessToken(token);
+        jwtAuthResponse.setRole(role);
+
+        return jwtAuthResponse;
     }
 
 }
