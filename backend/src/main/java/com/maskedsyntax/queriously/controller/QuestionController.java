@@ -3,7 +3,6 @@ package com.maskedsyntax.queriously.controller;
 import com.maskedsyntax.queriously.dto.QuestionRequestDTO;
 import com.maskedsyntax.queriously.dto.QuestionResponseDTO;
 import com.maskedsyntax.queriously.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
 
-    @Autowired
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
@@ -40,7 +38,8 @@ public class QuestionController {
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<QuestionResponseDTO> updateQuestion(@PathVariable Long id, @RequestBody QuestionRequestDTO questionRequestDTO) {
+    public ResponseEntity<QuestionResponseDTO> updateQuestion(@PathVariable Long id,
+            @RequestBody QuestionRequestDTO questionRequestDTO) {
         QuestionResponseDTO questionResponseDTO = questionService.updateQuestion(id, questionRequestDTO);
         return ResponseEntity.ok(questionResponseDTO);
     }

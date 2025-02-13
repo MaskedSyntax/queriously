@@ -2,7 +2,6 @@ package com.maskedsyntax.queriously.security;
 
 import com.maskedsyntax.queriously.entity.User;
 import com.maskedsyntax.queriously.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
-    @Autowired
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -25,15 +23,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail)
             throws UsernameNotFoundException {
-        User user
-                = userRepository
+        User user = userRepository
                 .findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         Set<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
-                                                       .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
-                                                       .collect(Collectors.toSet());
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+                .collect(Collectors.toSet());
 
-        return new org.springframework.security.core.userdetails.User(usernameOrEmail, user.getPassword_hash(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(usernameOrEmail, user.getPassword_hash(),
+                grantedAuthorities);
     }
 }
