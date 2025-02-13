@@ -3,7 +3,6 @@ package com.maskedsyntax.queriously.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,27 +18,20 @@ import com.maskedsyntax.queriously.entity.User;
 import com.maskedsyntax.queriously.exception.QueriouslyAPIException;
 import com.maskedsyntax.queriously.repository.RoleRepository;
 import com.maskedsyntax.queriously.repository.UserRepository;
+import com.maskedsyntax.queriously.security.JwtTokenProvider;
 import com.maskedsyntax.queriously.service.AuthService;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
-    @Autowired
-    public AuthServiceImpl(
-            UserRepository userRepository,
-            RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public String register(RegisterDTO registerDTO) {
@@ -80,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return "User logged-in Succefully!";
+        return jwtTokenProvider.generateToken(authentication);
     }
 
 }

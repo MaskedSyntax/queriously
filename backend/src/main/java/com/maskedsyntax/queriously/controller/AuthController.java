@@ -1,6 +1,5 @@
 package com.maskedsyntax.queriously.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.maskedsyntax.queriously.dto.JwtAuthResponseDTO;
 import com.maskedsyntax.queriously.dto.LoginDTO;
 import com.maskedsyntax.queriously.dto.RegisterDTO;
 import com.maskedsyntax.queriously.service.AuthService;
@@ -17,7 +17,6 @@ import com.maskedsyntax.queriously.service.AuthService;
 public class AuthController {
     private AuthService authService;
 
-    @Autowired
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
@@ -29,8 +28,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        String response = authService.login(loginDTO);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<JwtAuthResponseDTO> login(@RequestBody LoginDTO loginDTO) {
+        String token = authService.login(loginDTO);
+        
+        JwtAuthResponseDTO jwtAuthResponse = new JwtAuthResponseDTO();
+        jwtAuthResponse.setAccessToken(token);
+
+        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
 }
