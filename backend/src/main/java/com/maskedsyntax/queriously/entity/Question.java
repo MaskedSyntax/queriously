@@ -11,6 +11,13 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+
+/**
+ * Represents a Question entity in the system
+ * 
+ * This entity is used to store questions created by users, including content,
+ * an optional image URL, and scheduling information.
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,17 +25,50 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Getter
 @Table(name = "questions")
 public class Question {
+   
+    /**
+     * Unique identifier for the Question.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Identifier of the user who created the question.
+     */
     private Long userId;
+
+    /**
+     * The textual content of the question.
+     */
     private String content;
+
+    /**
+     * URL of the image associated with the question, if any.
+     */
     private String imageUrl;
+
+    /**
+     * The scheduled date and time when the question should be published.
+     */
     private Date scheduledAt;
+
+    /**
+     * Indicates whether the question has been published.
+     */
     private Boolean published;
+
+    /**
+     * Timestamp indicating when the question was created.
+     * Managed automatically by Hibernate.
+     */
     @CreationTimestamp
     private Date createdAt;
+    
+    /**
+     * Timestamp indicating when the question was last updated.
+     * Managed automatically by Hibernate.
+     */
     @UpdateTimestamp
     private Date updatedAt;
 }
