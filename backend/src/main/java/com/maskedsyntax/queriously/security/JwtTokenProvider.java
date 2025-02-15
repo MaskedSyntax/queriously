@@ -28,17 +28,25 @@ public class JwtTokenProvider {
 
     private Key key;
 
-    // Get Key
+    /**
+     * Initializes the JWT token provider by decoding the secret and caching the
+     * key.
+     */
     @PostConstruct
     public void init() {
-        // Cache the key so we don't decode it on every method call
+        // Decode the base64 encoded JWT secret and cache it so we don't decode it on
+        // every method call
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    // Generate JWT token
+    /**
+     * Generates a JWT token based on the authenticated user's details.
+     *
+     * @param authentication the Authentication object containing the user details
+     * @return a JWT token as a String
+     */
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
-
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + jwtExpirationMs);
 
@@ -51,7 +59,12 @@ public class JwtTokenProvider {
 
     }
 
-    // Get Username from JWT token
+    /**
+     * Extracts the username from the provided JWT token.
+     *
+     * @param token the JWT token
+     * @return the username embedded in the token
+     */
     public String getUsernameFromToken(String token) {
 
         return Jwts.parserBuilder()
@@ -62,7 +75,12 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-    // Validate JWT token
+    /**
+     * Validates the provided JWT token.
+     *
+     * @param token the JWT token to validate
+     * @return true if the token is valid; false otherwise
+     */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parse(token);
