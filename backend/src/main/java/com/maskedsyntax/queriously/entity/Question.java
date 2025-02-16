@@ -49,7 +49,7 @@ public class Question {
     /**
      * URL of the image associated with the question, if any.
      */
-    private String imageUrl;
+    private String imageURL;
 
     /**
      * The scheduled date and time when the question should be published.

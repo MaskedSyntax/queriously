@@ -145,7 +145,7 @@ public class QuestionServiceImpl implements QuestionService {
         // Update the question fields with values from the request DTO.
         question.setUser(fetchUsers(questionRequestDTO.getUserId()));
         question.setContent(questionRequestDTO.getContent());
-        question.setImageUrl(questionRequestDTO.getImageUrl());
+        question.setImageURL(questionRequestDTO.getImageURL());
         question.setPublished(questionRequestDTO.getPublished());
 
         // Save the updated question entity.
