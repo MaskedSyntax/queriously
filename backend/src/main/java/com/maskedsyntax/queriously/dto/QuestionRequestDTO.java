@@ -2,8 +2,6 @@ package com.maskedsyntax.queriously.dto;
 
 import java.util.Date;
 
-import com.maskedsyntax.queriously.entity.User;
-
 import lombok.*;
 
 /**

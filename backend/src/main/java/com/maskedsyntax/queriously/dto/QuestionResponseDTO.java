@@ -1,8 +1,6 @@
 package com.maskedsyntax.queriously.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.maskedsyntax.queriously.entity.User;
-
 import lombok.*;
 
 import java.util.Date;
