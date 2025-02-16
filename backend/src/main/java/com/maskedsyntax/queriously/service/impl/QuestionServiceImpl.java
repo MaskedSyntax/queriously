@@ -3,7 +3,9 @@ package com.maskedsyntax.queriously.service.impl;
 import com.maskedsyntax.queriously.dto.QuestionRequestDTO;
 import com.maskedsyntax.queriously.dto.QuestionResponseDTO;
 import com.maskedsyntax.queriously.entity.Question;
+import com.maskedsyntax.queriously.entity.User;
 import com.maskedsyntax.queriously.repository.QuestionRepository;
+import com.maskedsyntax.queriously.repository.UserRepository;
 import com.maskedsyntax.queriously.service.QuestionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     /**
@@ -38,8 +41,9 @@ public class QuestionServiceImpl implements QuestionService {
      * @param modelMapper the mapper to convert between entities and DTOs.
      */
     public QuestionServiceImpl(
-            QuestionRepository questionRepository, ModelMapper modelMapper) {
+            QuestionRepository questionRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.questionRepository = questionRepository;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -139,7 +143,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .orElseThrow(EntityNotFoundException::new);
 
         // Update the question fields with values from the request DTO.
-        question.setUser(questionRequestDTO.getUser());
+        question.setUser(fetchUsers(questionRequestDTO.getUserId()));
         question.setContent(questionRequestDTO.getContent());
         question.setImageUrl(questionRequestDTO.getImageUrl());
         question.setPublished(questionRequestDTO.getPublished());
@@ -149,5 +153,9 @@ public class QuestionServiceImpl implements QuestionService {
         
         // Map the updated entity to a response DTO.
         return modelMapper.map(updatedQuestion, QuestionResponseDTO.class);
+    }
+
+    private User fetchUsers(Long userId) {
+        return userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
     }
 }

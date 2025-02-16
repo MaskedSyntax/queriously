@@ -28,7 +28,7 @@ public class QuestionResponseDTO {
     /**
      * The unique identifier of the user who created or owns the question.
      */
-    private User user;
+    private Long userId;
 
     /**
      * The textual content of the question.
