@@ -139,7 +139,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .orElseThrow(EntityNotFoundException::new);
 
         // Update the question fields with values from the request DTO.
-        question.setUserId(questionRequestDTO.getUserId());
+        question.setUser(questionRequestDTO.getUser());
         question.setContent(questionRequestDTO.getContent());
         question.setImageUrl(questionRequestDTO.getImageUrl());
         question.setPublished(questionRequestDTO.getPublished());

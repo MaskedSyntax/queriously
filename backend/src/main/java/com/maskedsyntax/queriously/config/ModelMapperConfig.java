@@ -30,7 +30,7 @@ public class ModelMapperConfig {
         // Define custom mapping from QuestionRequestDTO to Question
         modelMapper.typeMap(QuestionRequestDTO.class, Question.class)
                 .addMappings(mapper -> {
-                    mapper.map(QuestionRequestDTO::getUserId, Question::setUserId);
+                    mapper.map(QuestionRequestDTO::getUser, Question::setUser);
                     mapper.skip(Question::setId); // Skip mapping for the `id` field
                 });
         return modelMapper;
