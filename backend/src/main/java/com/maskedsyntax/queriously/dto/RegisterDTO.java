@@ -2,9 +2,8 @@ package com.maskedsyntax.queriously.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * Data Transfer Object for user registration.
@@ -12,8 +11,7 @@ import lombok.Setter;
  * Contains the necessary details for registering a new user.
  * </p>
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

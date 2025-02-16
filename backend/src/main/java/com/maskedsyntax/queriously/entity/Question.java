@@ -11,7 +11,6 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
 /**
  * Represents a Question entity in the system
  * 
@@ -25,7 +24,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Getter
 @Table(name = "questions")
 public class Question {
-   
+
     /**
      * Unique identifier for the Question.
      */
@@ -34,9 +33,13 @@ public class Question {
     private Long id;
 
     /**
-     * Identifier of the user who created the question.
+     * The user who created this question.
+     * This is a Many-to-One relationship as multiple questions can be created by
+     * one user.
      */
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     /**
      * The textual content of the question.
@@ -64,7 +67,7 @@ public class Question {
      */
     @CreationTimestamp
     private Date createdAt;
-    
+
     /**
      * Timestamp indicating when the question was last updated.
      * Managed automatically by Hibernate.

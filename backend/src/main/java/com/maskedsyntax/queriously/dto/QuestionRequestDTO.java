@@ -2,6 +2,8 @@ package com.maskedsyntax.queriously.dto;
 
 import java.util.Date;
 
+import com.maskedsyntax.queriously.entity.User;
+
 import lombok.*;
 
 /**
@@ -12,9 +14,7 @@ import lombok.*;
  * and optional publishing details.
  * </p>
  */
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionRequestDTO {
@@ -22,7 +22,7 @@ public class QuestionRequestDTO {
     /**
      * The unique identifier of the user who created or owns the question.
      */
-    private Long userId;
+    private User user;
 
     /**
      * The textual content of the question.

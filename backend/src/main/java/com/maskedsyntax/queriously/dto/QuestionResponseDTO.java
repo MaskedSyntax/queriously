@@ -1,6 +1,8 @@
 package com.maskedsyntax.queriously.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.maskedsyntax.queriously.entity.User;
+
 import lombok.*;
 
 import java.util.Date;
@@ -13,9 +15,7 @@ import java.util.Date;
  * publication status, and timestamp information.
  * </p>
  */
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionResponseDTO {
@@ -28,7 +28,7 @@ public class QuestionResponseDTO {
     /**
      * The unique identifier of the user who created or owns the question.
      */
-    private Long userId;
+    private User user;
 
     /**
      * The textual content of the question.

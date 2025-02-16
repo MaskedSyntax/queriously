@@ -2,9 +2,8 @@ package com.maskedsyntax.queriously.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * Data Transfer Object for user login.
@@ -12,8 +11,7 @@ import lombok.Setter;
  * Contains credentials needed for authenticating a user.
  * </p>
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
