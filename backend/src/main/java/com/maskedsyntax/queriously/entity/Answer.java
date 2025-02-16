@@ -40,13 +40,16 @@ public class Answer {
 
     private String content;
 
+    private String imageURL;
+
     private Date scheduledAt;
 
-    private Boolean publishedAt;
+    private Boolean published;
 
     @CreationTimestamp
     private Date createdAt;
 
     @UpdateTimestamp
     private Date updatedAt;
+
 }
