@@ -15,9 +15,7 @@ import java.util.Date;
  * publication status, and timestamp information.
  * </p>
  */
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionResponseDTO {

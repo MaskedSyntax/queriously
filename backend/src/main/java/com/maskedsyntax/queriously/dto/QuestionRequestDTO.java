@@ -14,9 +14,7 @@ import lombok.*;
  * and optional publishing details.
  * </p>
  */
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionRequestDTO {
