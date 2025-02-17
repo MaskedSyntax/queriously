@@ -37,7 +37,7 @@ public class Question {
      * This is a Many-to-One relationship as multiple questions can be created by
      * one user.
      */
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
