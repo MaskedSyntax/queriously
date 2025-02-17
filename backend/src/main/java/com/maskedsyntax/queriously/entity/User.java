@@ -2,11 +2,12 @@ package com.maskedsyntax.queriously.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,8 +25,7 @@ import org.hibernate.annotations.UpdateTimestamp;
  * setters, and constructors.
  * 
  */
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -70,14 +70,14 @@ public class User {
      * Automatically managed by Hibernate.
      */
     @CreationTimestamp
-    private Date created_at;
+    private Date createdAt;
     
     /**
      * Timestamp indicating when the User was last updated.
      * Automatically managed by Hibernate.
      */
     @UpdateTimestamp
-    private Date updated_at;
+    private Date updatedAt;
 
     /**
      * The roles associated with the User.
@@ -94,4 +94,22 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
+
+    /**
+     * One user can create multiple questions.
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions = new ArrayList<>();
+
+    /**
+     * One user can create multiple answers.
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Answer> answers = new ArrayList<>();
+
+    /**
+     * One user can create multiple comments.
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 }
