@@ -63,7 +63,7 @@ public class User {
      * This field is mandatory.
      */
     @Column(nullable = false)
-    private String password_hash;
+    private String password;
     
     /**
      * Timestamp indicating when the User was created.
@@ -85,8 +85,8 @@ public class User {
      * This relationship is eagerly fetched and uses a join table "user_roles" to link users and roles.
      */
     @ManyToMany(
-        fetch = FetchType.EAGER,
-        cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+        fetch = FetchType.LAZY,
+        cascade = { CascadeType.MERGE, CascadeType.REFRESH}
     )
     @JoinTable(
         name = "user_roles",

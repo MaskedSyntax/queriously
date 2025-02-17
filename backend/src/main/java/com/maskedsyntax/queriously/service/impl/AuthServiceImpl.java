@@ -127,7 +127,7 @@ public class AuthServiceImpl implements AuthService {
         user.setName(registerDTO.getName());
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
-        user.setPassword_hash(passwordEncoder.encode(registerDTO.getPassword()));
+        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
         // Retrieve and assign the default role
         Role userRole = roleRepository.findByRoleName("ROLE_USER");
