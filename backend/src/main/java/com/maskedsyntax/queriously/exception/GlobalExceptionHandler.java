@@ -2,6 +2,7 @@ package com.maskedsyntax.queriously.exception;
 
 import java.time.LocalDateTime;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,5 +33,25 @@ public class GlobalExceptionHandler {
             .build();
 
         return new ResponseEntity<>(errorDetails, ex.getStatus());
+    }
+
+    /**
+     * Handles UnauthorizedException exceptions.
+     *
+     * @param ex      the thrown UnauthorizedException
+     * @param request the current web request
+     * @return a ResponseEntity containing the error details with HTTP status 403 FORBIDDEN.
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorDetails> handleUnauthorizedException(
+            UnauthorizedException ex, WebRequest request) {
+
+        ErrorDetails errorDetails = ErrorDetails.builder()
+            .timeStamp(LocalDateTime.now())
+            .message(ex.getMessage())
+            .details(request.getDescription(false))
+            .build();
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }
 }
