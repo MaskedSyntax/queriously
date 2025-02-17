@@ -2,11 +2,12 @@ package com.maskedsyntax.queriously.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,10 +19,9 @@ import org.hibernate.annotations.UpdateTimestamp;
  * an optional image URL, and scheduling information.
  */
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 @Table(name = "questions")
 public class Question {
 
@@ -74,4 +74,11 @@ public class Question {
      */
     @UpdateTimestamp
     private Date updatedAt;
+
+    /**
+     * One question can have multiple answers.
+     */
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Answer> answers = new ArrayList<>();
+
 }
