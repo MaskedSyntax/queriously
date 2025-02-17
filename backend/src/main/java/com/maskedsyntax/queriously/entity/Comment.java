@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 /**
  * Represents a Comment entity in the system, allowing for nested comments (threaded structure).
@@ -31,6 +32,7 @@ import jakarta.persistence.Table;
  * - Tracks creation and update timestamps.
  */
 @Entity
+@Data
 @Table(name = "comments")
 public class Comment {
     
